@@ -69,23 +69,17 @@ const server = http.createServer(app)
 
 server.on('upgrade', (req, socket, head) => {
     const host = req.headers.host;
-    if (!host) { socket.destroy(); return; }
-
-    // Prevent EPIPE and connection-reset errors from crashing the process
-    // during the active piped session (after ws() Promise has resolved)
-    socket.on('error', () => socket.destroy());
-
     const sandboxId = host.split('.')[ 0 ];
     const type = host.split('.')[ 1 ];
 
     console.log(`WS upgrade request: ${host}, sandboxId: ${sandboxId}, type: ${type}`);
 
     if (type === 'agent') {
-        wsProxy.ws(req, socket, { target: `http://sandbox-service-${sandboxId}:3000` }, head)
-            .catch(() => socket.destroy());
+        const proxy = getAgentProxy(sandboxId);
+        proxy.upgrade(req, socket, head);
     } else if (type === 'preview') {
-        wsProxy.ws(req, socket, { target: `http://sandbox-service-${sandboxId}` }, head)
-            .catch(() => socket.destroy());
+        const proxy = getProxy(sandboxId);
+        proxy.upgrade(req, socket, head);
     } else {
         socket.destroy();
     }
