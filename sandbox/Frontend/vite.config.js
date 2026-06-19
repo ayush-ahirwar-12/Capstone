@@ -11,8 +11,8 @@ export default defineConfig({
   },
   watch: {
     usePolling: true,
-    usePolling: true,
     interval: 300,
     ignored: ['node_modules']
   }
 })
+

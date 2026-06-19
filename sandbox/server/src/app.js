@@ -21,6 +21,7 @@ app.get('/api/sandbox/health', (req, res) => {
 });
 
 app.post("/api/sandbox/start", async (req, res) => {
+    console.log("SANDBOX START REQUEST RECEIVED");
 
     const sandboxId = uuid();
 
