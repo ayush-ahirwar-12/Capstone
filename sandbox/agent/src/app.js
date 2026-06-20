@@ -16,6 +16,7 @@ const httpServer = http.createServer(app)
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors({ methods: ["GET","POST","PATCH","DELETE"], origin: "*" }));
 
 const io = new Server(httpServer, {
     cors: {
