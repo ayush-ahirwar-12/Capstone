@@ -14,6 +14,14 @@ build:
         infer:
           - "src/**"
 
+    - image: auth
+      context: auth
+      docker:
+        dockerfile: dockerfile
+      sync:
+        infer:
+          - "src/**"
+
     - image: agent
       context: sandbox/agent
       docker:
@@ -38,6 +46,8 @@ manifests:
   rawYaml:
   - k8s/ai-deployment.yaml
   - k8s/ai-server.yaml
+  - k8s/auth-deployment.yaml
+  - k8s/auth.service.yaml
   - k8s/sandbox-deployment.yaml
   - k8s/sandbox-service.yaml
   - k8s/sandbox-ingress.yaml
