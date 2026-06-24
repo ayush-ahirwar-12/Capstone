@@ -1,6 +1,6 @@
 import { k8sApi } from './config.js'
 
-async function createPod (sandboxId) {
+export async function createPod (sandboxId) {
   const podManifest = {
     metadata: {
       name: `sandbox-pod-${sandboxId}`,
@@ -85,4 +85,14 @@ async function createPod (sandboxId) {
   return response
 }
 
-export default createPod
+export async function deletePod(sandboxId){
+  const response = await k8sApi.deleteNamespacedPod({
+    namespace: 'default',
+    name: `sandbox-pod-${sandboxId}`
+  },{
+    gracePeriodSeconds: 0
+  })
+
+  return response;
+}
+
