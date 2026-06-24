@@ -1,11 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import morgan from 'morgan';
 import {v7 as uuid} from 'uuid';
 import { createService } from './kubernetes/service.js';
 import { createPod } from './kubernetes/pod.js';
 import { createSandboxKey } from './config/redis.js';
-
-
 
 
 const app = express();

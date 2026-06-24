@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import Redis from "ioredis";
-import { deletePod } from "../kubernetes/pod";
-import { deleteService } from "../kubernetes/service";
+import { deletePod } from "../kubernetes/pod.js";
+import { deleteService } from "../kubernetes/service.js";
+
+console.log("REDIS_URL:", process.env.REDIS_URL);
 
 const redis = new Redis(process.env.REDIS_URL);
 
@@ -22,3 +26,5 @@ subscriber.on('message', async (channel, key) => {
     await deletePod(sandboxId);
     await deleteService(sandboxId);
 })
+
+export default subscriber;
