@@ -1,2 +1,4 @@
 /k8s/secrets.yaml
 /sandbox/server/.env
+/notification/.env
+/notification/node_modules
